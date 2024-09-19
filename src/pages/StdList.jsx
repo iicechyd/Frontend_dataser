@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom"; // import useNavigate
 import Navbar from "../components/NavbarTeacher";
 
 function StdList() {
@@ -9,6 +9,7 @@ function StdList() {
   const [courseName, setCourseName] = useState("");
   const [error, setError] = useState(null);
   const [status, setStatus] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAttendance = async () => {
@@ -37,6 +38,15 @@ function StdList() {
     setStatus(e.target.value);
   };
 
+  const goToAttenStat = () => {
+    navigate("/AttenStat", {
+      state: {
+        course_code: course_code,
+        course_name: courseName,
+      },
+    });
+  };
+
   return (
     <div>
       <Navbar />
@@ -48,12 +58,9 @@ function StdList() {
           </h1>
 
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
-            <a
-              href="./AttenStat"
-              style={{ color: "gray", textDecoration: "underline" }}
-            >
+            <button onClick={goToAttenStat} className="text-gray-900 underline">
               สถิติการเข้าเรียน
-            </a>
+            </button>
           </div>
 
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg p-4">
@@ -129,7 +136,15 @@ function StdList() {
                         <td className="px-6 py-4">{time}</td>
                         <td className="px-6 py-4">{formattedDate}</td>
                         <td className="px-6 py-4">
-                          <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                          <span
+                            className={
+                              student.status === "เข้าเรียน"
+                                ? "bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300"
+                                : student.status === "ขาดเรียน"
+                                ? "bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300"
+                                : "bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-gray-900 dark:text-gray-300"
+                            }
+                          >
                             {student.status}
                           </span>
                         </td>

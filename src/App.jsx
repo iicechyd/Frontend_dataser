@@ -24,6 +24,7 @@ function App() {
         <Route path="/checkin/:course_code" element={<CheckIn />} />
         <Route path="/CourseList/" element={<CourseList />} />
         <Route path="/checkinstatus/:course_code" element={<StdList/>} />
+        <Route path="/AttenStat" element={<AttenStat/>} />
         <Route path="/TeacherAddCourse/" element={<TeacherAddCourse/>} />
       </Routes>
     </Router>

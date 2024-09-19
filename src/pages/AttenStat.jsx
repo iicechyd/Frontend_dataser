@@ -1,103 +1,60 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/Navbar";
-import { useParams } from "react-router-dom";
 
 function AttenStat() {
-  const { course_code } = useParams();
-  const [attendance, setAttendance] = useState([]);
-  const [courseName, setCourseName] = useState("");
+  const [students, setStudents] = useState([]);
   const [error, setError] = useState(null);
-  const [status, setStatus] = useState("");
+  const location = useLocation();
+  const { course_code, course_name } = location.state || {};
 
   useEffect(() => {
-    const fetchAttendance = async () => {
+    const fetchStudents = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/atten/byc`, {
-          params: { course_code, status },
-        });
-
-        if (response.data.Attendance.length > 0) {
-          setAttendance(response.data.Attendance);
-          setCourseName(response.data.Attendance[1].course_name);
-        } else {
-          setAttendance([]);
-          setCourseName("");
-        }
+        const response = await axios.get("http://localhost:3000/atten/");
+        setStudents(response.data.Attendance);
       } catch (err) {
-        console.error(err);
-        setError("Failed to fetch attendance");
+        setError("Failed to fetch students");
       }
     };
 
-    fetchAttendance();
-  }, [course_code, status]);
+    fetchStudents();
+  }, []);
 
-  const handleStatusChange = (e) => {
-    setStatus(e.target.value);
-  };
-
-  const toggleStatus = (index) => {
-    setAttendance((prevAttendance) => {
-      const newAttendance = [...prevAttendance];
-      const currentStatus = newAttendance[index].status;
-
-      if (currentStatus === "present") {
-        newAttendance[index].status = "late";
-      } else if (currentStatus === "late") {
-        newAttendance[index].status = "absent";
-      } else if (currentStatus === "absent") {
-        newAttendance[index].status = "leave";
-      } else {
-        newAttendance[index].status = "present";
-      }
-
-      return newAttendance;
-    });
-  };
-
-  const renderStatusCircle = (status, index) => {
-    let bgColor;
-    switch (status) {
-      case "present":
-        bgColor = "bg-green-500";
-        break;
-      case "late":
-        bgColor = "bg-orange-500";
-        break;
-      case "absent":
-        bgColor = "bg-red-500";
-        break;
-      case "leave":
-        bgColor = "bg-blue-500";
-        break;
-      default:
-        bgColor = "bg-gray-300";
-    }
-
+  const renderStatusCircle = (status) => {
     return (
-      <button
-        className={`inline-block w-4 h-4 ${bgColor} rounded-full`}
-        onClick={() => toggleStatus(index)}
-      />
+      <span
+        className={
+          status === "เข้าเรียน"
+            ? "bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300"
+            : status === "ขาดเรียน"
+            ? "bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300"
+            : status === "มาสาย"
+            ? "bg-yellow-300 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-yellow-500 dark:text-gray-300"
+            : "bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-gray-900 dark:text-gray-300"
+        }
+      >
+        {status === "เข้าเรียน" ? "✔" : status === "ขาดเรียน" ? "✘" : "-"}
+      </span>
     );
   };
+
   return (
     <div>
       <Navbar />
-
       <div className="flex justify-center py-8">
         <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8">
           <h1 className="text-2xl font-bold text-center mb-6">
-            สถิติการเข้าเรียน
+            สถิติการเข้าเรียนล่าสุด
           </h1>
 
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg p-4">
             <h2 className="text-xl font-semibold pb-8">
-              รายวิชา: {course_code} {courseName}
+              {course_code} {course_name}
             </h2>
 
-            <div className="relative overflow-x-auto  sm:rounded-lg">
+            <div className="relative overflow-x-auto sm:rounded-lg">
               <table className="min-w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead className="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
@@ -110,63 +67,68 @@ function AttenStat() {
                     <th scope="col" className="px-6 py-3">
                       ชื่อ-นามสกุล
                     </th>
-                    <th scope="col" className="px-6 py-3">
-                      1/09/24
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                      8/09/24
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                      19/09/24
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                      30/09/24
-                    </th>
+                    {students.map((student, index) => (
+                      <th scope="col" className="px-6 py-3">
+                        สัปห์ดาที่ {index + 1}
+                      </th>
+                    ))}
                   </tr>
                 </thead>
                 <tbody>
-                  {attendance.map((student, index) => {
-                    const date = new Date(student.date);
-                    const time = date.toLocaleTimeString();
-                    const formattedDate = date.toLocaleDateString();
-
-                    return (
-                      <tr
-                        key={index}
-                        className="bg-white text-center border-b dark:bg-gray-800 dark:border-gray-700"
+                  {students.map((student, index) => (
+                    <tr
+                      key={index}
+                      className="bg-white text-center border-b dark:bg-gray-800 dark:border-gray-700"
+                    >
+                      <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        {index + 1}
+                      </td>
+                      <th
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                       >
-                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                          {index + 1}
-                        </td>
-                        <th
-                          scope="row"
-                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        {student.student_id}
+                      </th>
+                      <td className="px-6 py-4">
+                        {student.student_fname} {student.student_lname}
+                      </td>
+                      <td className="px-6 py-4">
+                        <span
+                          className={
+                            student.status === "เข้าเรียน"
+                              ? "bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300"
+                              : student.status === "ขาดเรียน"
+                              ? "bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300"
+                              : "bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-gray-900 dark:text-gray-300"
+                          }
                         >
-                          {student.student_id}
-                        </th>
-                        <td className="px-6 py-4">
-                          {student.student_fname} {student.studnet_lname}
-                        </td>
-                        <td className="px-6 py-4 ">
-                          {renderStatusCircle(student.status)}
-                        </td>
-                        <td className="px-6 py-4 ">
-                          {renderStatusCircle(student.status)}
-                        </td>
-                        <td className="px-6 py-4 ">
-                          {renderStatusCircle(student.status)}
-                        </td>
-                        <td className="px-6 py-4 ">
-                          {renderStatusCircle(student.status)}
-                        </td>
-                      </tr>
-                    );
-                  })}
+                          {student.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
             {error && <p className="text-red-500 mt-4">{error}</p>}
           </div>
+
+          <span class="flex items-center text-sm font-medium text-gray-900 dark:text-white me-3">
+            <span class="flex w-2.5 h-2.5 bg-green-400 rounded-full me-1.5 flex-shrink-0"></span>
+            มาเรียน
+          </span>
+          <span class="flex items-center text-sm font-medium text-gray-900 dark:text-white me-3">
+            <span class="flex w-2.5 h-2.5 bg-red-500 rounded-full me-1.5 flex-shrink-0"></span>
+            ขาดเรียน
+          </span>
+          <span class="flex items-center text-sm font-medium text-gray-900 dark:text-white me-3">
+            <span class="flex w-2.5 h-2.5 bg-yellow-300 rounded-full me-1.5 flex-shrink-0"></span>
+            มาสาย
+          </span>
+          <span class="flex items-center text-sm font-medium text-gray-900 dark:text-white me-3">
+            <span class="flex w-2.5 h-2.5 bg-gray-500 rounded-full me-1.5 flex-shrink-0"></span>
+            ลา
+          </span>
         </div>
       </div>
     </div>

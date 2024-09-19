@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 import { Link } from 'react-router-dom'; 
@@ -65,7 +65,7 @@ function Student() {
                         to={`/checkin/${course.course_code}`} // ส่ง course_code ผ่าน URL
                         className="text-blue-600 hover:text-blue-800"
                       >
-                        เช็คชื่อ
+                       เช็คชื่อ
                       </Link>
                     </td>
                   </tr>

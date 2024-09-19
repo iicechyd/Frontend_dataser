@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'; 
 import Navbar from '../components/NavbarTeacher';
 import axios from 'axios';
@@ -86,7 +86,7 @@ function TeacherList() {
                         onClick={() => openAttendance(course.course_code)}
                         className="text-blue-600 hover:text-blue-800"
                       >
-                        เปิดระบบเช็คชื่อ
+                        เปิดระบบเช็คชื่ออออ
                       </button>
                     </td>
                   </tr>
