@@ -54,7 +54,7 @@ function TeacherList() {
           <h1 className="text-2xl font-bold text-left mb-6">รายวิชาที่สอน</h1>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {courses.map((course, index) => (
+            {courses.map((course) => (
               <div
                 key={course.course_code}
                 className="course-card bg-white shadow-lg rounded-lg p-6 dark:bg-gray-800"

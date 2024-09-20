@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/NavbarTeacher"; 
+import TeacherLayout from "../components/TeacherLayout"; 
 
 function TeacherChangePassword() {
   const [password, setPassword] = useState("");
@@ -44,7 +44,7 @@ function TeacherChangePassword() {
 
   return (
     <div>
-      <Navbar />
+      <TeacherLayout>
       <div className="flex justify-center py-8">
         <div className="w-full max-w-md px-4 sm:px-6 lg:px-8">
           <h1 className="text-2xl font-bold text-center mb-6">เปลี่ยนรหัสผ่าน</h1>
@@ -80,6 +80,7 @@ function TeacherChangePassword() {
           </form>
         </div>
       </div>
+      </TeacherLayout>
     </div>
   );
 }

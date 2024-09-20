@@ -10,7 +10,7 @@ function Navbar() {
       navigate("/courseListstd");
     };
     const handleStudent = () => {
-      navigate("/Student");
+      navigate("/students");
     };
     const handleLogout = () => {
       localStorage.removeItem("token");

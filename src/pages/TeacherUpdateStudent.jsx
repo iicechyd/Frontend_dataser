@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
-import Navbar from "../components/NavbarTeacher";
+import TeacherLayout from "../components/TeacherLayout";
 
 function UpdateStudent() {
   const { student_id } = useParams();
@@ -17,7 +17,7 @@ function UpdateStudent() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`http://localhost:3000/student/update`, {
+      constresponse = await axios.put(`http://localhost:3000/student/update`, {
         first_name: firstName,
         last_name: lastName,
         email: email,
@@ -39,7 +39,7 @@ function UpdateStudent() {
 
   return (
     <div>
-      <Navbar />
+      <TeacherLayout>
       <div className="flex justify-center py-8">
         <div className="w-full max-w-2xl px-4 sm:px-6 lg:px-8">
           <h1 className="text-2xl font-bold text-center mb-6">อัพเดตข้อมูลนักศึกษา</h1>
@@ -123,6 +123,7 @@ function UpdateStudent() {
           </form>
         </div>
       </div>
+      </TeacherLayout>
     </div>
   );
 }
