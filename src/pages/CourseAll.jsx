@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import StudentLayout from '../components/StudentLayout';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import axios from "axios";
+import StudentLayout from "../components/StudentLayout";
+import { useNavigate } from "react-router-dom";
 
 const CourseList = () => {
   const [courses, setCourses] = useState([]);
@@ -12,7 +12,7 @@ const CourseList = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/courses');
+        const response = await axios.get("http://localhost:3000/courses");
         setCourses(response.data);
         setLoading(false);
       } catch (err) {
@@ -31,32 +31,37 @@ const CourseList = () => {
       navigate("/");
       return;
     }
-    const confirmRegistration = window.confirm("คุณแน่ใจหรือว่าต้องการลงทะเบียนวิชานี้?");
+    const confirmRegistration = window.confirm(
+      "คุณแน่ใจหรือว่าต้องการลงทะเบียนวิชานี้?"
+    );
     if (!confirmRegistration) {
-      return; 
-    }else{
-        alert('ลงทะเบียนเรียบร้อยเเล้ว')
+      return;
+    } else {
+      alert("ลงทะเบียนเรียบร้อยเเล้ว");
     }
 
     try {
-      const response = await axios.post('http://localhost:3000/enroll/create', {
-        course_code: courseCode,
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const response = await axios.post(
+        "http://localhost:3000/enroll/create",
+        {
+          course_code: courseCode,
         },
-      });
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (response.status === 200) {
-        alert('ลงทะเบียนเรียบร้อยแล้ว!');
-        const updatedCourses = await axios.get('http://localhost:3000/courses');
+        alert("ลงทะเบียนเรียบร้อยแล้ว!");
+        const updatedCourses = await axios.get("http://localhost:3000/courses");
         setCourses(updatedCourses.data);
       } else {
-        alert('มีข้อผิดพลาดเกิดขึ้นในการลงทะเบียน');
+        alert("มีข้อผิดพลาดเกิดขึ้นในการลงทะเบียน");
       }
     } catch (err) {
-      console.log(err); 
-    
+      console.log(err);
     }
   };
 
@@ -69,11 +74,11 @@ const CourseList = () => {
   }
 
   return (
-    <div>
+    <div className="flex flex-col h-screen bg-gray-100">
       <StudentLayout>
-        <div className="flex justify-center py-8">
-          <div className="w-full max-w-4xl">
-            <h1 className="text-2xl font-bold text-left mb-6">
+        <div className="flex-1 p-6">
+          <div className="max-w-7xl mx-auto bg-white shadow-md rounded-lg p-6">
+            <h1 className="text-2xl font-bold text-center mb-6">
               รายวิชาทั้งหมด
             </h1>
 

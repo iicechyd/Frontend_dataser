@@ -196,7 +196,7 @@ const StudentLayout = ({ children }) => {
         <title>ระบบเช็คชื่อ</title>
       </Helmet>
       <Navbar />
-      <div className="p-4 sm:ml-64">
+      <div className="p-4 sm:ml-64 min-h-screen bg-gray-100">
         <main>{children}</main>
       </div>
     </div>

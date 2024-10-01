@@ -28,7 +28,7 @@ function StdList() {
         });
 
         if (response.data.Attendance.length > 0) {
-          setAllAttendance(response.data.Attendance); // Store all attendance data
+          setAllAttendance(response.data.Attendance);
           setAttendance(response.data.Attendance);
           setCourseName(response.data.Attendance[1].course_name);
         } else {
@@ -92,12 +92,11 @@ function StdList() {
     <div>
       <Layout>
         <div className="flex justify-center py-8">
-          <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-            <h1 className="text-2xl font-bold text-center mb-6">
+          <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8 ">
+            <h1 className="text-2xl font-bold text-center mb-6 text-black shadow-md rounded-lg p-4 bg-white">
               สถานะการเข้าเรียนล่าสุด
             </h1>
-
-            <div className="relative overflow-x-auto shadow-md sm:rounded-lg p-4 ">
+            <div className="relative overflow-x-auto bg-white shadow-md sm:rounded-lg p-4 ">
               <div style={{ display: "flex", justifyContent: "flex-end" }}>
                 <select
                   value={status}

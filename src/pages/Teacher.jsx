@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import TeacherLayout from "../components/TeacherLayout";
 import axios from "axios";
-
 import { Link } from "react-router-dom";
 
 function TeacherList() {
@@ -48,13 +47,35 @@ function TeacherList() {
     }
   };
 
+  const deleteCourse = async (courseCode) => {
+    const confirmDelete = window.confirm(
+      `คุณต้องการลบวิชา ${courseCode} หรือไม่?`
+    );
+
+    if (confirmDelete) {
+      const token = localStorage.getItem("token");
+      try {
+        await axios.delete("http://localhost:3000/courses/del", {
+          headers: { Authorization: `Bearer ${token}` },
+          params: { course_code: courseCode },
+        });
+        alert(`ลบวิชา ${courseCode} เรียบร้อยแล้ว`);
+        setCourses(courses.filter((course) => course.course_code !== courseCode));
+      } catch (err) {
+        console.error(err);
+        alert("ไม่สามารถลบวิชาได้");
+      }
+    }
+  };
+
   return (
     <div>
       <TeacherLayout>
         <div className="flex justify-center py-8">
           <div className="w-full max-w-4xl">
-            <h1 className="text-2xl font-bold text-left mb-6">รายวิชาที่สอน</h1>
-
+            <h1 className="text-2xl font-bold text-center mb-6 text-black shadow-md rounded-lg p-4 bg-white">
+              รายวิชาที่สอน
+            </h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {courses.map((course) => (
                 <div
@@ -81,15 +102,34 @@ function TeacherList() {
                     </p>
                   </div>
 
-                  <div className="text-center mt-auto">
+                  <div className="text-center mt-auto space-y-2">
                     <Link
                       onClick={(e) => {
-                        e.preventDefault(); // ป้องกันการเปลี่ยนเส้นทาง
+                        e.preventDefault();
                         openAttendance(course.course_code);
                       }}
-                      className="text-blue-600 hover:text-blue-800 font-semibold"
+                      className="text-blue-600 hover:text-blue-800 font-semibold block"
                     >
                       เปิดระบบเช็คชื่อ
+                    </Link>
+
+                   
+                    <Link
+                      onClick={(e) => {
+                        e.preventDefault();
+                        deleteCourse(course.course_code);
+                      }}
+                      className="text-red-600 hover:text-red-800 font-semibold block"
+                    >
+                      ลบรายวิชา
+                    </Link>
+
+                    
+                    <Link
+                      to={`/TeacherUpdateCourse/${course.course_code}`}
+                      className="text-green-600 hover:text-green-800 font-semibold block"
+                    >
+                      แก้ไขรายวิชา
                     </Link>
                   </div>
                 </div>

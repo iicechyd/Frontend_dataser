@@ -26,7 +26,7 @@ function TeacherChangePassword() {
     try {
       const token = localStorage.getItem("token");
 
-      const response = await axios.put(
+      await axios.put(
         "http://localhost:3000/teacher/update",
         { password },
         {
@@ -37,12 +37,12 @@ function TeacherChangePassword() {
       );
 
       setSuccess("Password updated successfully!");
-      setLoading(false);
+      false;
       window.alert("รหัสผ่านของคุณถูกเปลี่ยนเรียบร้อยแล้ว!");
       navigate("/TeacherChangePassword");
     } catch (err) {
       console.error(err);
-      setLoading(false);
+      false;
       setError("Failed to update password");
     }
   };
@@ -82,7 +82,7 @@ function TeacherChangePassword() {
               </div>
               <button
                 type="submit"
-                className="w-full text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:border-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-2 py-2 shadow-md hover:shadow-lg transition-transform transform hover:scale-95"
+                className="w-full mt-2 text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-4 py-2 shadow-md hover:shadow-lg transition-transform transform hover:scale-95 w-15"
               >
                 เปลี่ยนรหัสผ่าน
               </button>

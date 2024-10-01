@@ -28,17 +28,14 @@ const CourseDetails = () => {
 
   const handleCheckAttendance = () => {
     alert('ตรวจสอบสถานะการเข้าเรียน');
-    // Connect with function or route for checking attendance status
   };
 
   const handleViewStudents = () => {
     alert('รายชื่อนักศึกษา');
-    // Connect with function or route for showing student list
   };
 
   const handleOpenAttendanceSystem = () => {
     alert('เปิดระบบเช็คชื่อ');
-    // Connect with function or route for opening attendance system
   };
 
   // Inline styles

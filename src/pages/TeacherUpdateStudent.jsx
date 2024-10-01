@@ -4,13 +4,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import TeacherLayout from "../components/TeacherLayout";
 
 function UpdateStudent() {
+  const navigate = useNavigate();
   const { student_id } = useParams();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [newStudentId, setNewStudentId] = useState(student_id);
-  const [department, setDepartment] = useState(""); // Add department field
+  const [department, setDepartment] = useState("");
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
 
@@ -20,6 +21,7 @@ function UpdateStudent() {
         const response = await axios.get(
           `http://localhost:3000/update/${student_id}`
         );
+
         const { first_name, last_name, email, department } =
           response.data.student;
         setFirstName(first_name);
@@ -39,17 +41,22 @@ function UpdateStudent() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:3000/teacher/updateStudent`, {
-        first_name: firstName,
-        last_name: lastName,
-        email: email,
-        password: password,
-        new_student_id: newStudentId,
-        department: department,
-      });
+      await axios.put(
+        `http://localhost:3000/teacher/updateS?student_id=${student_id}`,
+        {
+          first_name: firstName,
+          last_name: lastName,
+          email: email,
+          password: password,
+          new_student_id: newStudentId,
+          department: department, // Include department in the request
+        }
+      );
 
       setSuccess("Student updated successfully");
       setError(null);
+      // Redirect to /AllStudent after 2 seconds
+      setTimeout(() => navigate("/AllStudent"), 2000);
     } catch (err) {
       console.error(err);
       setError("Failed to update student");
@@ -146,6 +153,22 @@ function UpdateStudent() {
                   id="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                />
+              </div>
+
+              <div className="mb-4">
+                <label
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  htmlFor="department"
+                >
+                  ภาควิชา
+                </label>
+                <input
+                  type="text"
+                  id="department"
+                  value={department}
+                  onChange={(e) => setDepartment(e.target.value)}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 />
               </div>

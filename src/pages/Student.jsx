@@ -36,7 +36,7 @@ function Student() {
       <StudentLayout>
         <div className="flex justify-center py-8">
           <div className="w-full max-w-4xl">
-            <h1 className="text-2xl font-bold text-left mb-6">
+            <h1 className="text-2xl font-bold text-center mb-6 text-black shadow-md rounded-lg p-4 bg-white">
               รายวิชาที่ลงทะเบียน
             </h1>
 

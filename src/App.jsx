@@ -23,6 +23,7 @@ import CourseAll from "./pages/CourseAll";
 import InsertStudent from "./pages/InsertStudent";
 import AllStudent from "./pages/AllStudent";
 
+
 function App() {
   const token = localStorage.getItem("token");
   const isLoggedIn = !!token;
@@ -64,7 +65,7 @@ function App() {
           element={<TeacherUpdateStudent />}
         />
         <Route
-          path="/TeacherChangePassword"
+          path="/TeacherChangePassword/"
           element={<TeacherChangePassword />}
         />
         <Route
@@ -75,6 +76,7 @@ function App() {
         <Route path="/CourseAll" element={<CourseAll />} />
         <Route path="/AllStudent" element={<AllStudent />} />
         <Route path="/AllStudent" element={<AllStudent />} />
+       
       </Routes>
     </Router>
   );

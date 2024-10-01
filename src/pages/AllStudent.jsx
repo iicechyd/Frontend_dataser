@@ -11,7 +11,7 @@ const AllStudent = () => {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/student"); // URL ของ API ที่ใช้ดึงข้อมูล
+        const response = await axios.get("http://localhost:3000/student");
         setStudents(response.data);
       } catch (err) {
         setError(err.message);
@@ -22,16 +22,18 @@ const AllStudent = () => {
   }, []);
 
   const handleUpdate = (studentId) => {
-    navigate(`/TeacherUpdateStudent/${studentId}`); // เปลี่ยน URL สำหรับไปยังหน้าปรับปรุงข้อมูลนักศึกษา
+    navigate(`/TeacherUpdateStudent/${studentId}`);
   };
 
   const handleDelete = async (studentId) => {
-    if (window.confirm("Are you sure you want to delete this student?")) {
+    if (window.confirm("ยืนยันการลบรายชื่อนักศึกษาใช่หรือไม่")) {
       try {
-        await axios.delete(`/api/students/del?student_id=${studentId}`);
+        await axios.delete(
+          `http://localhost:3000/student/del?student_id=${studentId}`
+        );
         setStudents(
           students.filter((student) => student.student_id !== studentId)
-        ); // อัปเดตรายการหลังจากลบ
+        );
       } catch (err) {
         setError(err.message);
       }
@@ -69,7 +71,10 @@ const AllStudent = () => {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {students.map((student, index) => (
-                    <tr key={index}>
+                    <tr
+                      key={index}
+                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                    >
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 text-center">
                         {student.student_id}
                       </td>
@@ -85,13 +90,16 @@ const AllStudent = () => {
                       <td className="px-6 py-4 text-center">
                         <button
                           onClick={() => handleUpdate(student.student_id)}
-                          className="text-blue-500 hover:text-blue-700"
+                          type="button"
+                          className="text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-4 py-2 shadow-md hover:shadow-lg transition-transform transform hover:scale-95 w-15"
                         >
-                          อัพเดต
+                          อัพเดท
                         </button>
+                        &nbsp;
                         <button
                           onClick={() => handleDelete(student.student_id)}
-                          className="ml-4 text-red-500 hover:text-red-700"
+                          type="button"
+                          className="text-white bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-4 py-2 shadow-md hover:shadow-lg transition-transform transform hover:scale-95 w-19"
                         >
                           ลบ
                         </button>
