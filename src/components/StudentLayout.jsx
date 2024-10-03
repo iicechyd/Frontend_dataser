@@ -2,9 +2,19 @@ import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import PropTypes from "prop-types";
 import "../css/globals.css";
-
+import { useEffect, useState } from "react";
 function Navbar() {
   const navigate = useNavigate();
+
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    const firstName = localStorage.getItem("first_name");
+    const lastName = localStorage.getItem("last_name");
+    if (firstName && lastName) {
+      setUserName(`${firstName} ${lastName}`);
+    }
+  }, []);
 
   const handleCrourseListstd = () => {
     navigate("/courseListstd");
@@ -66,6 +76,11 @@ function Navbar() {
                 เช็คชื่อ
               </span>
             </a>
+            {userName && (
+              <p className="text-gray-900 font-bold mb-4 text-center">
+                ยินดีต้อนรับ {userName}
+              </p>
+            )}
 
             <ul className="space-y-2 font-medium">
               <li>
