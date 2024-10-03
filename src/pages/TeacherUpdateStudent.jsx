@@ -49,13 +49,13 @@ function UpdateStudent() {
           email: email,
           password: password,
           new_student_id: newStudentId,
-          department: department, // Include department in the request
+          department: department, 
         }
       );
 
       setSuccess("Student updated successfully");
       setError(null);
-      // Redirect to /AllStudent after 2 seconds
+      
       setTimeout(() => navigate("/AllStudent"), 2000);
     } catch (err) {
       console.error(err);
