@@ -40,6 +40,7 @@ function TeacherAddCourse() {
       );
 
       alert("สร้างคอร์สสำเร็จ");
+      setTimeout(() => navigate("/teachers"), 1000);
     } catch (err) {
       console.error(err);
       if (err.response) {
@@ -134,7 +135,7 @@ function TeacherAddCourse() {
                   required
                 />
               </div>
-              
+
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   เวลาเรียน
@@ -225,7 +226,7 @@ function TeacherAddCourse() {
                     <button
                       type="button"
                       onClick={() => removeSlot(index)}
-                      className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-3.5 py-2 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                      className="text-white bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-4 py-2 shadow-md hover:shadow-lg transition-transform transform hover:scale-95 w-19"
                     >
                       ลบ
                     </button>

@@ -49,14 +49,14 @@ function UpdateStudent() {
           email: email,
           password: password,
           new_student_id: newStudentId,
-          department: department, 
+          department: department,
         }
       );
 
       setSuccess("Student updated successfully");
       setError(null);
-      
-      setTimeout(() => navigate("/AllStudent"), 2000);
+
+      setTimeout(() => navigate("/AllStudent"), 1000);
     } catch (err) {
       console.error(err);
       setError("Failed to update student");

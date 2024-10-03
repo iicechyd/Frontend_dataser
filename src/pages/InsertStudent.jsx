@@ -30,7 +30,7 @@ function InsertStudent() {
       setError(null);
       alert("Student inserted successfully!");
 
-      setTimeout(() => navigate("/AllStudent/"), 2000);
+      setTimeout(() => navigate("/AllStudent/"), 1000);
     } catch (err) {
       console.error("Error response:", err.response);
       setError(

@@ -60,7 +60,9 @@ function TeacherList() {
           params: { course_code: courseCode },
         });
         alert(`ลบวิชา ${courseCode} เรียบร้อยแล้ว`);
-        setCourses(courses.filter((course) => course.course_code !== courseCode));
+        setCourses(
+          courses.filter((course) => course.course_code !== courseCode)
+        );
       } catch (err) {
         console.error(err);
         alert("ไม่สามารถลบวิชาได้");
@@ -80,8 +82,17 @@ function TeacherList() {
               {courses.map((course) => (
                 <div
                   key={course.course_code}
-                  className="course-card bg-white shadow-lg rounded-lg p-6 dark:bg-gray-800 flex flex-col justify-between h-full"
+                  className="course-card bg-white shadow-lg rounded-lg p-6 dark:bg-gray-800 flex flex-col justify-between h-full relative"
                 >
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      deleteCourse(course.course_code);
+                    }}
+                    className="absolute top-4 right-4 text-red-600 hover:text-red-800 font-bold text-xl bg-transparent hover:bg-white rounded-full p-1"
+                  >
+                    &times;
+                  </button>
                   <div>
                     <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                       {course.course_name}
@@ -101,7 +112,6 @@ function TeacherList() {
                       ))}
                     </p>
                   </div>
-
                   <div className="text-center mt-auto space-y-2">
                     <Link
                       onClick={(e) => {
@@ -113,18 +123,6 @@ function TeacherList() {
                       เปิดระบบเช็คชื่อ
                     </Link>
 
-                   
-                    <Link
-                      onClick={(e) => {
-                        e.preventDefault();
-                        deleteCourse(course.course_code);
-                      }}
-                      className="text-red-600 hover:text-red-800 font-semibold block"
-                    >
-                      ลบรายวิชา
-                    </Link>
-
-                    
                     <Link
                       to={`/TeacherUpdateCourse/${course.course_code}`}
                       className="text-green-600 hover:text-green-800 font-semibold block"
