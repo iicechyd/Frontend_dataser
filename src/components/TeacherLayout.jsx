@@ -17,7 +17,6 @@ function Navbar() {
     }
   }, []);
 
-
   const handleTeacherChangePassword = () => {
     navigate("/TeacherChangePassword/");
   };
@@ -43,15 +42,13 @@ function Navbar() {
     localStorage.removeItem("token");
     navigate("/");
   };
- 
- 
+
   return (
     <nav>
       <Helmet>
         <title>ระบบเช็คชื่อ | สำหรับอาจารย์</title>
-      
       </Helmet>
-      
+
       <div className="sidebar">
         <button
           data-drawer-target="logo-sidebar"
@@ -92,7 +89,8 @@ function Navbar() {
             </a>
             {userName && (
               <p className="text-gray-900 font-bold mb-4 text-center">
-                ยินดีต้อนรับ {userName}
+                ยินดีต้อนรับ
+                <br /> {userName}
               </p>
             )}
 
@@ -279,7 +277,7 @@ const Layout = ({ children }) => {
         <title>ระบบเช็คชื่อ</title>
         {fname}
       </Helmet>
-      
+
       <Navbar />
       <div className="p-4 sm:ml-64 min-h-screen bg-gray-100">
         <main>{children}</main>

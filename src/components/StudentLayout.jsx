@@ -77,8 +77,8 @@ function Navbar() {
               </span>
             </a>
             {userName && (
-              <p className="text-gray-900 font-bold mb-4 text-center">
-                ยินดีต้อนรับ {userName}
+              <p className="text-gray-900 font-bold mb-4 text-center ">
+                ยินดีต้อนรับ <br /> {userName}
               </p>
             )}
 
