@@ -139,7 +139,7 @@ function TeacherUpdateTime() {
               type="submit"
               className="text-white bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-2 py-2 shadow-md hover:shadow-lg transition-transform transform hover:scale-95"
             >
-              อัพเดตวิชา
+              อัพเดตข้อมูล
             </button>
           </div>
         </form>
