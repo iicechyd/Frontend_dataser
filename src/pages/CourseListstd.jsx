@@ -72,7 +72,7 @@ function CourseListstd() {
         <main className="flex-1 p-6">
           <div className="max-w-7xl mx-auto bg-white shadow-md rounded-lg p-6">
             <h1 className="text-3xl font-bold text-center mb-6">
-              รายวิชาทั้งหมด
+              ตรวจสอบการเช็คชื่อรายวิชาทั้งหมด
             </h1>
             <div className="relative overflow-x-auto sm:rounded-lg">
               <table className="min-w-full text-sm text-left text-gray-500 dark:text-gray-400">
